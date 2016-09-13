@@ -1,4 +1,4 @@
-package io.github.dlmarion.clowncar;
+package io.github.dlmarion.clowncar.jna;
 
 import com.sun.jna.IntegerType;
 import com.sun.jna.Native;
