@@ -31,9 +31,6 @@ public class BloscLibrary {
 	public static int compress(int compressionLevel, int shuffleType,
 			int typeSize, Buffer src, long srcLength, Buffer dest, 
 			long destLength, String compressorName, int blockSize, int numThreads) {
-		if (typeSize > 255) {
-			throw new IllegalArgumentException("Type size must be below 256");
-		}
 		if (srcLength > (Integer.MAX_VALUE - 16)) {
 			throw new IllegalArgumentException("Source array is too large");
 		}

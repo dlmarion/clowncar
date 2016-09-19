@@ -67,7 +67,7 @@ public abstract class TestBase {
 	@Parameterized.Parameters
 	public static Collection<Object[]> generateParameters() {
 		Collection<Object[]> params = new ArrayList<>();
-		for (String compressor : new String[]{BloscBase.BLOSCLZ, BloscBase.LZ4, BloscBase.LZ4HC, BloscBase.SNAPPY, BloscBase.ZLIB, BloscBase.ZSTD}) {
+		for (String compressor : new String[]{"blosclz", "lz4", "lz4hc", "snappy", "zlib", "zstd"}) {
 			for (int level : new int[]{1,2,3,4,5,6,7,8,9}) {
 				for (int shuffle : new int[]{0,1,2}) {
 					for (int threads : new int[] {1/*,2,3,4*/}) {
