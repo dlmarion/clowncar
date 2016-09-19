@@ -98,11 +98,8 @@ public class BloscDecompressor implements Decompressor, DirectDecompressor {
 		}
 		dst.get(b, off, r);
 		//We have read src.position() bytes. We need to preserve the bytes left over from the position to the limit.
-		src.position(bytesToRead);
-		byte[] tmp = new byte[src.remaining()];
-		src.get(tmp, 0, tmp.length);
-		buffer.clear();
-		buffer.put(tmp, 0, tmp.length);
+		buffer.position(bytesToRead);
+		buffer.compact();
 		return r;
 	}
 
