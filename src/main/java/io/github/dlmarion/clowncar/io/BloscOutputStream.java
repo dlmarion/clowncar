@@ -1,6 +1,7 @@
 package io.github.dlmarion.clowncar.io;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import io.github.dlmarion.clowncar.Blosc;
 import io.github.dlmarion.clowncar.BloscCompressorType;
 import io.github.dlmarion.clowncar.BloscShuffleType;
 import io.github.dlmarion.clowncar.jnr.BloscLibrary;
@@ -36,7 +37,7 @@ public class BloscOutputStream<T> extends OutputStream implements AutoCloseable 
 	public BloscOutputStream(OutputStream out, int blocksize, Class<T> type, BloscCompressorType compressor, int compressionLevel, BloscShuffleType shuffleType, int numThreads) {
 		this.out = out;
 		this.buf = ByteBuffer.allocateDirect(blocksize);
-		this.dst = ByteBuffer.allocateDirect(blocksize + 16);
+		this.dst = ByteBuffer.allocateDirect(blocksize + Blosc.OVERHEAD);
 		this.type = type;
 		this.compressor = compressor;
 		this.compressionLevel = compressionLevel;

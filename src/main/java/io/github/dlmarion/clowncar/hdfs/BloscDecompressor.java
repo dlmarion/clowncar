@@ -81,7 +81,7 @@ public class BloscDecompressor implements Decompressor, DirectDecompressor {
 	    if (this.buffer.position() == 0) {
 	    	return 0;
 	    }
-	    //Read b.length-16 bytes from buffered input
+	    //Read b.length-Blosc.OVERHEAD bytes from buffered input
 	    int bytesToRead = len - off;
 		if (bytesToRead <= 0) {
 			return 0;

@@ -1,5 +1,7 @@
 package io.github.dlmarion.clowncar.jnr;
 
+import io.github.dlmarion.clowncar.Blosc;
+
 import java.nio.Buffer;
 
 import jnr.ffi.LibraryLoader;
@@ -31,15 +33,22 @@ public class BloscLibrary {
 	public static int compress(int compressionLevel, int shuffleType,
 			int typeSize, Buffer src, long srcLength, Buffer dest, 
 			long destLength, String compressorName, int blockSize, int numThreads) {
-		if (srcLength > (Integer.MAX_VALUE - 16)) {
+		if (srcLength > (Integer.MAX_VALUE - Blosc.OVERHEAD)) {
 			throw new IllegalArgumentException("Source array is too large");
 		}
-		if (destLength < (srcLength + 16)) {
+		if (destLength < (srcLength + Blosc.OVERHEAD)) {
 			throw new IllegalArgumentException(
 					"Dest array is not large enough.");
 		}
-		return INSTANCE.blosc_compress_ctx(compressionLevel, shuffleType, typeSize, srcLength, 
+		int w = INSTANCE.blosc_compress_ctx(compressionLevel, shuffleType, typeSize, srcLength, 
 				src, dest, destLength, compressorName, blockSize, numThreads);
+		if (w == 0) {
+			throw new RuntimeException("Compressed size larger then dest length");
+		}
+		if (w == -1) {
+			throw new RuntimeException("Error compressing data: src: " + src + ", dst: " + dest);
+		}
+		return w;
 	}
 	
 	public static int decompress(Buffer src, Buffer dest, long destSize, int numThreads) {

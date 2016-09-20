@@ -1,5 +1,6 @@
 package io.github.dlmarion.clowncar.hdfs;
 
+import io.github.dlmarion.clowncar.Blosc;
 import io.github.dlmarion.clowncar.BloscCompressorType;
 import io.github.dlmarion.clowncar.BloscShuffleType;
 import io.github.dlmarion.clowncar.jnr.BloscLibrary;
@@ -114,15 +115,12 @@ public class BloscCompressor implements Compressor {
 		if (bytesToRead > buffer.position()) {
 			bytesToRead = buffer.position();
 		}
-		int bytesToWrite = bytesToRead + 16;
+		int bytesToWrite = bytesToRead + Blosc.OVERHEAD;
 		buffer.flip();
 		ByteBuffer src = buffer.slice();
 		ByteBuffer dst = ByteBuffer.allocate(bytesToWrite);
 		int w = BloscLibrary.compress(this.compressionLevel, this.shuffleType.getShuffleType(), this.bytesForType, src, bytesToRead, 
 				dst, dst.capacity(), this.compressionType.getCompressorName(), this.blockSize, this.numThreads);
-		if (w == -1) {
-			throw new RuntimeException("Error compressing data: src: " + src + ", dst: " + dst);
-		}
 		written += w;
 		if (w > b.length) {
 			throw new RuntimeException("destination array is not large enough. Currently: " + b.length + ", needs to be: " + w);

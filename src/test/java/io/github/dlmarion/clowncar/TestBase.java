@@ -102,7 +102,7 @@ public abstract class TestBase {
 
 	@Test
 	public void testTimeCompression() throws Exception {
-		long dstLength = TIMES_LENGTH + 16;
+		long dstLength = TIMES_LENGTH + Blosc.OVERHEAD;
 		ByteBuffer dest = ByteBuffer.allocateDirect((int)dstLength);
 		ByteBuffer verify = ByteBuffer.allocateDirect((int)dstLength);
 		
@@ -125,7 +125,7 @@ public abstract class TestBase {
 
 	@Test
 	public void testFlatCompression() throws Exception {
-		long dstLength = FLAT_LENGTH + 16;
+		long dstLength = FLAT_LENGTH + Blosc.OVERHEAD;
 		ByteBuffer dest = ByteBuffer.allocateDirect((int)dstLength);
 		ByteBuffer verify = ByteBuffer.allocateDirect((int)dstLength);
 		
@@ -146,7 +146,7 @@ public abstract class TestBase {
 
 	@Test
 	public void testRateCompression() throws Exception {
-		long dstLength = RATE_LENGTH + 16;
+		long dstLength = RATE_LENGTH + Blosc.OVERHEAD;
 		ByteBuffer dest = ByteBuffer.allocateDirect((int)dstLength);
 		ByteBuffer verify = ByteBuffer.allocateDirect((int)dstLength);
 		
@@ -167,7 +167,7 @@ public abstract class TestBase {
 
 	@Test
 	public void testWaveCompression() throws Exception {
-		long dstLength = WAVE_LENGTH + 16;
+		long dstLength = WAVE_LENGTH + Blosc.OVERHEAD;
 		ByteBuffer dest = ByteBuffer.allocateDirect((int)dstLength);
 		ByteBuffer verify = ByteBuffer.allocateDirect((int)dstLength);
 		
